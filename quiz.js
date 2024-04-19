@@ -55,15 +55,10 @@ async function loadQuiz() {
         console.log(data)
         if (data) {
             const question = data[currentQuiz].question_text;
-            // console.log("question", question)
-
             const correctAnswerData = data[currentQuiz].correct_answer;
-            // console.log("correctAnswerData", correctAnswerData)
 
-            const incorrect_answers = data[currentQuiz].options.filter(item => item !== correctAnswerData);
-
+            const incorrect_answers = JSON.parse(data[currentQuiz].options).filter(item => item !== correctAnswerData);
             const incorrectAnswers = [...incorrect_answers];
-            // console.log("incorrectAnswers", incorrectAnswers)
 
             const randomNumber = Math.floor(Math.random() * 4);
             incorrectAnswers.splice(randomNumber, 0, correctAnswerData);
@@ -80,6 +75,7 @@ async function loadQuiz() {
         console.error('Error loading quiz:', error);
     }
 }
+
 
 function deselectAnswers() {
     answerEls.forEach(answerEl => (answerEl.checked = false));
